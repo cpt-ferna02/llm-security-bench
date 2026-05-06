@@ -1,6 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 
+
 def generate_report(raw_results: list, defended_results: list, output_path="report.html"):
     combined = []
     for r, d in zip(raw_results, defended_results):
@@ -10,6 +11,8 @@ def generate_report(raw_results: list, defended_results: list, output_path="repo
             "owasp": r["owasp"],
             "raw_outcome": r["outcome"],
             "def_outcome": d["outcome"],
+            "mistral_verdict": d.get("mistral_verdict", "N/A"),
+            "phi3_verdict": d.get("phi3_verdict", "N/A"),
         })
 
     raw_success = sum(1 for r in raw_results if r["outcome"] == "success")
